@@ -50,19 +50,40 @@ def contact():
 			db.commit()
 			flash('Bedankt voor het bericht!')
 	except KeyError:
-		return 'Form not Found'
+		return 'error'
 	return set_cookie(render_template('contact.html', form=form))
 
 
 
-@app.route('/intranet')
-@app.route('/intranet/<option>')
+@app.route('/intranet', methods=['GET', 'POST'])
+@app.route('/intranet/<option>', methods=['GET', 'POST'])
 def intranet(option='Richtingen'):
 	session_add_page('intranet')
 	leraarArray = get_leraren()
 	aanbodArray = get_aanbod()
 	klasArray = get_klassen()
-	return set_cookie(render_template('intranet.html', option=option, leraarArray=leraarArray, aanbodArray=aanbodArray, klasArray=klasArray))
+
+	try:
+		form = MyForm(request.form)
+		if request.method == 'POST': #AND FORM.VALIDATE() IS EEN PROBLEEEM?????
+			whichForm´= request.form.get('button')
+			
+
+
+
+
+			form.value = 	[request.form.get('naam'), 
+							request.form.get('description')]
+			to_add = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
+
+			#db = get_db()
+			#db.execute(to_add, (form.value));
+			#db.commit()
+			flash('Richting Aangemaakt!')
+	except KeyError:
+		return 'error'
+
+	return set_cookie(render_template('intranet.html', option=option, leraarArray=leraarArray, aanbodArray=aanbodArray, klasArray=klasArray, form=form))
 
 
 

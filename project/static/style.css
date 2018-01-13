@@ -278,7 +278,6 @@ footer a:hover {
 	padding: 2px 5px;
 	font-size: 20px;
 	transition: 0.15s all;
-	width: 450px;
 }
 #contact form dd input:focus, #contact form dd textarea:focus{
 	border-color: #FAB56B;
@@ -348,10 +347,84 @@ footer a:hover {
 }
 
 
+/* CREATE FORM ON INTRANET*/
+#intranet > div { /*flash */
+	margin-bottom: 20px !important;
+	min-height: 33px;
+}
+#intranet h3{
+	float: left;
+	margin-right: 50px;
+}
+
+#intranet .new{
+	margin-bottom: 50px;
+	float: left;
+	width: 425px;
+	padding-left: 50px;
+}
+#intranet .new dt{
+	margin: 1.4em 0 0.2em;
+}
+#intranet .new dt:first-child{
+	margin-top: 0;
+}
+#intranet .new dd textarea{
+	max-width: 425px;
+	min-width: 425px;
+	min-height: 40px;
+	height: 40px;
+}
+#intranet .new dd input{
+	width: 425px;
+}
+#intranet .new p input, #intranet .new dd input, #intranet .new dd textarea{
+	/* DEFAULT STYLING RESET */
+	background: none !important;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit !important;
+}
+#intranet .new p input{ /* SEND BUTTON */
+	border: 2px solid #FAB56B;
+	padding: 6px 30px;
+	position: relative;
+	top: 100px;
+	left: -100px;
+	transform: translateX(-50%);
+	font-size: 1em;
+	transition: 0.15s all;
+}
+#intranet .new p input:hover{
+	background-color: #FEE0C1 !important;
+}
+#intranet .new dd input, #intranet .new dd textarea{
+	border: 1px solid #bbb;
+	padding: 2px 5px;
+	font-size: 20px;
+	transition: 0.15s all;
+}
+#intranet .new dd input:focus, #intranet .new dd textarea:focus{
+	border-color: #FAB56B;
+}
+#intranet .new dl {
+	margin-top: -60px;
+}
 
 
+/* ############# DELETE ON INTRANET ############## */
+.delete {
+	float: right;
+	position: relative;
+	margin-top: -40px;
+	top: 40px;
+}
+#intranet .dropdown{
+	width: 450px;
+}
 
-/* ############# RICHTINGEN ############## */
 
 /* ############## KLASSEN  ############### */
 

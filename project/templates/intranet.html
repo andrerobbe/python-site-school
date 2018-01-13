@@ -3,7 +3,10 @@
 {% set title = 'intranet' %}
 
 {% block content %}
-
+	<div>
+		{% from "_macros.html" import flashes %}
+		{{ flashes() }}
+	</div>
 	<div class="wrapper cfx">
 		<div>
 			<ul id="nav">
@@ -14,10 +17,23 @@
 		</div>
 		<div>
 			{% if option == 'Richtingen' %}
-			<ul class="study">
+			<ul class="study cfx">
+				<h3>Nieuw:</h3>
+				<form method="post" action="{{ url_for('intranet') }}" class="new">
+					<p><input type="submit" name='button' value="Aanmaken">
+					{% from "_macros.html" import render_field %}
+					<dl>
+						{{ render_field(form.naam) }}
+						{{ render_field(form.description) }}
+					</dl>
+				</form>
+
 				{% for richting in aanbodArray %}
 					<li>
 						<div>
+							<form method="post" action="{{ url_for('intranet') }}" class="delete">
+								<p><input type="submit" name='button' value="Delete"></p>
+							</form>
 							<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}</h3></button>
 							<p>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p>
 						</div>

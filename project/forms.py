@@ -8,3 +8,6 @@ class MyForm(Form):
 	postcode = IntegerField('Postcode', [validators.required()])
 	phone = IntegerField('Telefoonnummer', [validators.required()])
 	msg = TextAreaField('Bericht', [validators.Length(min=20, max=500), validators.required()])
+
+	#CREATE RICHTING
+	description = TextAreaField('Beschrijving', [validators.Length(min=20, max=500), validators.required()])
