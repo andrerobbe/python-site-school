@@ -49,12 +49,9 @@ def contact():
 			db.execute(add_post, (form.value));
 			db.commit()
 			flash('Bedankt voor het bericht!')
-			return redirect(url_for('contact'))
-		else:
-			return set_cookie(render_template('contact.html', form=form))
 	except KeyError:
 		return 'Form not Found'
-
+	return set_cookie(render_template('contact.html', form=form))
 
 
 
