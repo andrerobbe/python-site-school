@@ -2,7 +2,7 @@ from project import app
 from flask import render_template, request, flash, redirect, g, url_for, session
 
 import sqlite3
-from forms import ContactForm, CreateRichtingenForm
+from forms import MyForm
 
 
 """
@@ -35,7 +35,7 @@ def wie():
 def contact():
 	session_add_page('contact')
 	try:
-		form = ContactForm(request.form)
+		form = MyForm(request.form)
 		if request.method == 'POST' and form.validate():
 			form.value = 	[request.form.get('naam'), 
 							request.form.get('straat'), 
