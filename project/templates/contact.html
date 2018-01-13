@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block title %}Contact{% endblock %}
+{% set title = 'contact' %}
+
+{% block content %}
+
+	<div class="wrapper">
+		{% from "_macros.html" import flashes %}
+		{{ flashes() }}
+
+		<form method="post" action="{{ url_for('contact') }}">
+			{% from "_macros.html" import render_field %}
+			<dl>
+				{{ render_field(form.naam) }}
+				{{ render_field(form.straat) }}
+				{{ render_field(form.stad) }}
+				{{ render_field(form.postcode) }}
+				{{ render_field(form.phone) }}
+				{{ render_field(form.msg) }}
+			</dl>
+			<p><input type="submit" value="Versturen">
+		</form>
+	</div>
+{% endblock %}

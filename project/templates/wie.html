@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+{% block title %}Wie is wie{% endblock %}
+{% set title = 'wie-is-wie' %}
+
+{% block content %}
+	<div class="wrapper">
+		<ul class="people">
+			 {% for leraar in leraarArray %}
+				<li>
+					<img src="../static/img/leraren/{% for info in leraar %}{% if loop.index == 1 %}{{info}}{% endif %}{% endfor %}-{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}.jpg" 
+					alt="{% for info in leraar %}{% if loop.index == 1 %}{{info}}{% endif %}{% endfor %} {% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}">
+					<div>
+						<h3>{% for info in leraar %}{% if loop.index == 1 %}{{ info }}{% endif %} {% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</h3>
+						{% for info in leraar %}
+							{% if loop.index == 3 %}<p>E-mail: <a href="mailto:{{ info }}">{{ info }}</a></p>{% endif %}
+							{% if loop.index == 4 %}
+								<p>Geeft les in: {{info}}</p>
+								<!-- for array purposes, already styled
+								<ul>
+									<li>{{info}}</li>
+								</ul>
+								-->
+							{% endif %}
+						{% endfor %}
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}

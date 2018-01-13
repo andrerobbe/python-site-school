@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{% block title %}Welkom bij Atheneum Antwerpen{% endblock %}
+{% set title = 'home' %}
+
+{% block content %}
+	<div>
+		<div class="wrapper">
+			{% from "_macros.html" import flashes %}
+			{{ flashes() }}
+		</div>
+	</div>
+	<div>
+		<div class="wrapper cfx">
+			<img src="https://www.kdg.be/sites/default/files/styles/kdg_normal_image/public/images/campus-zuid1.jpg?itok=66wC8UF6" alt="KDG campus zuid">
+			<h2>Coaching</h2>
+			<p>We begeleiden je van student tot professional, moedigen je aan om het verschil te maken.</p>
+			<ul>
+				<li>Onze docenten en medewerkers geven je richting, jij bepaalt de snelheid.</li>
+				<li>Onze experten dagen je uit om hoog te mikken. Maar ook met vragen over leermethode, faalangst, studiefinanciering … kan je bij hen terecht.</li>
+				<li>Overal kennisdeling: samen studeren, tips van hogerejaars, advies vanop de werkvloer.</li>
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<div class="wrapper cfx">
+			<img src="../static/img/quote.png" alt="Quote van Sam Serrien: De opleiding Multimedia Technology levert schitterende, getalenteerde en gemotiveerde studenten af. KdG slaagt erin om de vinger aan de pols te houden, wat zich vertaalt in innovativiteit.">
+			<h2>Stevig diploma</h2>
+			<p>Wij verwachten een hoge inzet van jou en onze medewerkers. Daardoor zijn onze oud-studenten</p>
+			<ul>
+				<li>Graag geziene sollicitanten en slimme ondernemers.</li>
+				<li>Gedreven teamspelers én leiders die levenslang leren en kennis delen.</li>
+				<li>Sterke professionals die samen de wereld mooier maken.</li>
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<div class="wrapper cfx">
+			<img src="https://www.kdg.be/sites/default/files/styles/kdg_normal_image/public/images/bootcamp-startupcampus_fotograaf-seppe-dankers-16.jpg?itok=SqorcVM3" alt="leerlingen">
+			<h2>Grensverleggende innovatie en experiment</h2>
+			<p>We creëren, bouwen verder op het bestaande, doen je over muren kijken:</p>
+			<ul>
+				<li>Onze docenten leren elke dag zélf bij, tekenen voor trendsettende methodieken.</li>
+				<li>We werken graag aan projecten over de grenzen van de opleidingen heen.</li>
+				<li>Jij krijgt alle kansen om te exploreren en te experimenteren: pak ze!</li>
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<div class="wrapper cfx">
+			<img src="https://www.kdg.be/sites/default/files/styles/kdg_normal_image/public/images/ziekenhuis.jpg?itok=8UTKduzy" alt="studenten verpleegkunde">
+			<h2>Real life</h2>
+			<p>We mixen theorie en praktijk. Je leert een vak en een job.</p>
+			<ul>
+				<li>Je werkt mee aan projecten van bedrijven en organisaties.</li>
+				<li>Je oefent in simulatieruimtes en op échte werkplekken.</li>
+				<li>Je bachelor- of masterstof doet er écht toe: real life experience.</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

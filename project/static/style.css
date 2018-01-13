@@ -1,0 +1,360 @@
+.cfx:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+h1{ font-size: 36px; }
+h2{ font-size: 30px; }
+p { font-size: 18px; }
+a{ color: #FAB56B; }
+
+ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+header{
+	background-color: #1d1d1b;
+	padding: 30px 0;
+}
+nav ul {
+	display: flex;
+	margin: 0 auto;
+	padding: 0;
+	width: 645px;
+	list-style: none;
+}
+
+nav ul li {
+	display: inline;
+	padding: 15px 0;
+	border-bottom: 2px solid #1d1d1b;
+	margin: 0 15px;
+	transition: 0.2s all;
+}
+nav ul li:first-child{margin-left: 0}
+nav ul li:last-child {margin-right: 0;}
+
+nav ul li:hover, nav ul .active {
+	border-bottom: 2px solid #FAB56B;
+	color: black !important;
+	cursor: pointer;
+}
+
+nav ul li a{
+	color: #fff;
+	padding: 19px 25px;
+}
+
+nav ul li a:hover {
+	text-decoration: none;
+	color: #fff;
+}
+
+main h1 {
+	text-align: center;
+	background-color: #1d1d1b;
+	color:#fff;
+	padding: 20px 0 50px;
+	margin: 0;
+}
+footer{
+	text-align: center;
+	background-color: #1d1d1b;
+	padding: 10px 0;
+	color: #999;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	line-height: 20px;
+}
+footer p{
+	font-size: 11px;
+}
+footer a:hover {
+	color: #fff;
+}
+
+.wrapper{
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+
+#aanbod, #wie-is-wie, #contact, #intranet {
+	margin: 50px 0;
+}
+
+
+/*
+###############################
+########## HOME PAGE ##########
+###############################
+*/
+
+#home img{
+	height: 200px;
+	border: 3px solid #FAB56B;
+	align-items: center;
+}
+#home > div:nth-child(3) img{
+	border-color: #1d1d1b;
+}
+#home > div:nth-child(2n) img{
+	margin-right: 50px;
+	float: left;
+}
+#home > div:nth-child(2n+1) img{
+	margin-left: 50px;
+	float: right;
+}
+#home > div:nth-child(2n+1){ 
+	background-color: #1d1d1b;
+	color: #fff;
+}
+
+#home > div{ margin-bottom: 50px; }
+#home > div:first-child{
+	margin-top: 0;
+
+}
+#home > div:last-child{
+	margin-bottom: 0;
+	padding-bottom: 50px;
+}
+#home > div{ padding: 5px 0 25px; }
+
+
+/*
+###############################
+######### ONS AANBOD ##########
+###############################
+*/
+
+.study li {
+	margin: 15px 0 0;
+}
+
+.study li p{
+	font-size: 16px;
+}
+.study button h3{
+	padding-left: 10px;
+	margin: 0;
+	line-height: 130%;
+}
+
+.study button{
+	/* DEFAULT STYLING RESET */
+	background: none !important;
+	color: inherit;
+	border: none;
+	padding: 0! important;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit !important;
+
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #1d1d1b;
+}
+.study h3:hover span{
+	transition: 0.15s all;
+	color: #FAB56B;
+}
+
+.study button + p {
+	display: none;
+}
+.study .show + p {
+	display: inline;
+}
+.study .show{
+	margin-bottom: 20px;
+}
+
+
+/*
+###############################
+########## WIE IS WIE #########
+###############################
+*/
+.people {
+	display: flex;
+	flex-flow: row wrap;
+	margin-bottom: 0;
+}
+
+.people > li {
+	display: flex;
+	margin-bottom: 20px;
+}
+.people > li:nth-child(2n+1){
+	margin-right: 40px;
+}
+
+.people > li div{
+	width: 280px;
+	padding: 15px 0 0 20px;
+}
+
+.people img{
+	max-width: 150px;
+	max-height: 150px;
+	height: auto;
+	border-radius: 25px;
+	display: block;
+	margin-bottom: 1em;
+}
+
+.people h3{
+	margin-top: 0;
+}
+.people p {
+	font-size: 14px;
+}
+
+/* for array purposes, check wie.html line 19*/
+.people li ul {
+	padding-left: 80px;
+	margin-top: -2.15em;
+}
+
+
+
+/*
+###############################
+########### CONTACT ###########
+###############################
+*/
+
+#contact form{
+	width: 450px;
+	margin: 0 auto;
+}
+
+#contact form dt{
+	margin: 1.4em 0 0.2em;
+}
+
+#contact form dd textarea{
+	max-width: 450px;
+	min-width: 450px;
+	min-height: 205px;
+}
+
+#contact form dd input{
+	width: 450px;
+}
+
+#contact form p input, #contact form dd input, #contact form dd textarea{
+	/* DEFAULT STYLING RESET */
+	background: none !important;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit !important;
+}
+#contact form p input{ /* SEND BUTTON */
+	border: 2px solid #FAB56B;
+	padding: 12px 80px;
+	position: relative;
+	top: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 50px;
+	font-size: 1em;
+	transition: 0.15s all;
+	width: auto;
+}
+#contact form p input:hover{
+	background-color: #FEE0C1 !important;
+}
+
+#contact form dd input, #contact form dd textarea{
+	border: 1px solid #bbb;
+	padding: 2px 5px;
+	font-size: 20px;
+	transition: 0.15s all;
+	width: 450px;
+}
+#contact form dd input:focus, #contact form dd textarea:focus{
+	border-color: #FAB56B;
+}
+
+.errors{
+	color: #F73232;
+}
+
+
+.flashes {
+	text-align: center;
+	width: 450px;
+	margin: 0 auto;
+	font-size: 1.5em;
+}
+
+
+/*
+###############################
+########## INTRANET ###########
+###############################
+*/
+
+#intranet > div > div:first-child{
+	width: 300px;
+	float: left;
+	margin-bottom: 440px;
+}
+
+#intranet > div > div:last-child{
+	width: 600px;
+	float: left;
+}
+
+
+#intranet #nav{
+	margin: 0;
+}
+#intranet #nav li {
+	font-size: 1.5em;
+	padding: 5.5px 0;
+	width: 180px;
+	border-left: 3px solid #fff;
+	transition: 0.15s all;
+}
+#intranet #nav li:nth-child(2){
+	margin: 20px 0;
+}
+#intranet #nav li:hover, #intranet #nav .active {
+	border-color: #FAB56B;
+	color: #FAB56B;
+	cursor: pointer;
+}
+#intranet #nav li a{
+	color: #000;
+	padding: 9px 70px 9px 20px;
+}
+#intranet #nav li:hover a{
+	color: #FAB56B;
+	text-decoration: none;
+}
+
+#intranet h2{
+	margin-left: 300px;
+	margin-bottom: 20px;
+}
+
+
+
+
+
+/* ############# RICHTINGEN ############## */
+
+/* ############## KLASSEN  ############### */
+
+
+/* ############## LERAREN ################ */

@@ -1,0 +1,60 @@
+{% extends "index.html" %}
+{% block title %}Intranet{% endblock %}
+{% set title = 'intranet' %}
+
+{% block content %}
+
+{{ id }}
+	<div class="wrapper cfx">
+		<div>
+			<ul id="nav">
+				<li {% if option == 'Richtingen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/Richtingen">Richtingen</a></li>
+				<li {% if option == 'Klassen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/Klassen">Klassen</a></li>
+				<li {% if option == 'Leraren' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/Leraren">Leraren</a></li>			
+			</ul>
+		</div>
+		<div>
+			{% if option == 'Richtingen' %}
+			<ul class="study">
+				{% for richting in aanbodArray %}
+					<li>
+						<div>
+							<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}</h3></button>
+							<p>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+
+			{% elif option == 'Klassen'%}
+			<ul class="klassen">
+				{% for klas in klasArray %}
+				<li><p>{% for info in klas %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %} {% for info in klas %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p></li>
+				{% endfor %}
+			</ul>
+
+			{% elif option == 'Leraren' %}
+			<ul class="people">
+				{% for leraar in leraarArray %}
+					<li>
+						<img src="../static/img/leraren/{% for info in leraar %}{% if loop.index == 1 %}{{info}}{% endif %}{% endfor %}-{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}.jpg" 
+						alt="{% for info in leraar %}{% if loop.index == 1 %}{{info}}{% endif %}{% endfor %} {% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}">
+						<div>
+						{% for info in leraar %}
+							<h3>{% if loop.index == 1 %}{{ info }}{% endif %}{% if loop.index == 2 %}{{ info }}{% endif %}</h3>
+							{% if loop.index == 3 %}<p>Email: <a href="mailto:{{ info }}">{{ info }}</a></p>{% endif %}
+							{% if loop.index == 4 %}
+								<p>Geeft les in:</p>
+								<ul>
+									<li>{{info}}</li>
+								</ul>
+							{% endif %}
+						{% endfor %}
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

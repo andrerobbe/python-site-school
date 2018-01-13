@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+      <div>
+        <nav>
+          <ul>
+            <li {% if title == 'home' %}class="active"{% endif %}><a href="{{ url_for('home') }}">Home</a></li>
+            <li {% if title == 'aanbod' %}class="active"{% endif %}><a href="{{ url_for('aanbod') }}">Ons Aanbod</a></li>
+            <li {% if title == 'wie-is-wie' %}class="active"{% endif %}><a href="{{ url_for('wie') }}">Wie is wie</a></li>
+            <li {% if title == 'contact' %}class="active"{% endif %}><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li {% if title == 'intranet' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}">Intranet</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <h1>{{ self.title() }}</h1>
+      <div id="{{ title }}">        
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+    <footer>
+      <p><a href="/session_reset">Reset Session</a> - <a href="/session_show">Show Session</a> - <a href="/delete_cookie">Delete Cookie</a></p>
+    </footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

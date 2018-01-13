@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+{% block title %}Ons Aanbod{% endblock %}
+{% set title = 'aanbod' %}
+
+{% block content %}
+<div class="wrapper">
+	<ul class="study">
+		{% for richting in aanbodArray %}
+			<li>
+				<div>
+					<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}</h3></button>
+					<p>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
