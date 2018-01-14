@@ -174,6 +174,10 @@ footer a:hover {
 	margin-bottom: 20px;
 }
 
+#aanbod{ /* shitty fix to push footer to bottom */
+	margin-bottom: 292px;
+}
+
 
 /*
 ###############################

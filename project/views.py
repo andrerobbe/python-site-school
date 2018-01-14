@@ -89,15 +89,15 @@ def intranet(option='richtingen'):
 		#update form
 		klas_info = get_klas_info()
 		klas_id = get_klas_id()
-		klas_information = []
+		klas_id_info = []
 
 		for info in klas_info:
 			for id_ in klas_id:
 				klas_id_str = id_[0]
 				combinedInfo = info[0] + " " + info[1]
-				print combinedInfo
-			klas_information.append([klas_id_str, combinedInfo])
-		updateKlasForm.update_id.choices = klas_information
+			klas_id_info.append([klas_id_str, combinedInfo])
+		updateKlasForm.update_id.choices = klas_id_info
+
 
 	elif option == "leraren":
 		leraarArray = get_leraren()
@@ -345,8 +345,6 @@ def get_leraar_id():
 	for row in id_:
 		ids.append( row )
 	return ids
-
-
 
 
 """
