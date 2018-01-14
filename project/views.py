@@ -4,7 +4,7 @@ from flask import render_template, request, flash, redirect, g, url_for, session
 import sqlite3
 import datetime
 
-from forms import ContactForm, CreateRichtingenForm, CreateKlasForm, CreateLeraarForm, UpdateForm
+from forms import ContactForm, CreateRichtingenForm, CreateKlasForm, CreateLeraarForm, UpdateRichtingForm, UpdateKlasForm, UpdateLeraarForm
 
 
 """
@@ -62,30 +62,69 @@ def contact():
 @app.route('/intranet/<option>', methods=['GET', 'POST'])
 def intranet(option='richtingen'):
 	session_add_page('intranet')
-	aanbodArray = ''
-	klasArray = ''
-	leraarArray = ''
-	richtingForm = CreateRichtingenForm(request.form)
-	klasForm = CreateKlasForm(request.form)
-	leraarForm = CreateLeraarForm(request.form)
-	updateForm = UpdateForm(request.form)
+	aanbodArray 		= ''
+	klasArray 			= ''
+	leraarArray 		= ''
+	richtingForm 		= CreateRichtingenForm(request.form)
+	klasForm 			= CreateKlasForm(request.form)
+	leraarForm 			= CreateLeraarForm(request.form)
+	updateRichtingForm 	= UpdateRichtingForm(request.form)
+	updateKlasForm 		= UpdateKlasForm(request.form)
+	updateLeraarForm 	= UpdateLeraarForm(request.form)
 
 
 	#get info + set update choices
 	if option == "richtingen":
 		aanbodArray = get_aanbod()
-
+		#update form
 		richting_ids = get_richting_id()
-		updateForm.update_id.choices = richting_ids
+		updateRichtingForm.update_id.choices = richting_ids
 
 	elif option == "klassen":
 		klasArray = get_klassen()
-
+		#create form fill in
 		richting_ids = get_richting_id()
 		klasForm.richting.choices = richting_ids
 
+
+		#update form
+		#klas_id = []
+		#klas_info = []
+		#for klas in klasArray:
+		#	klas_id.append(klas[0])
+		#	klas_info.append(klas[1])
+		#	klas_info.append(klas[2])
+			#for element in klas:
+				#print element
+		#print klas_info
+		#updateKlasForm.update_id.choices = klas_id
+
+		#for idx, klas in enumerate(klasArray):
+		#	if idx == 0:
+		#		for info in klas:
+		#			klas_id.append(klas[0])
+		#print klas_id
+		#print klas_info
+
+		#print richting_ids
+		#klas_info = get_klas_info()
+		#klas_id = get_klas_id()
+		#klas_information = []
+		#for info in klas_info:
+		#	for id_ in klas_id:
+		#		klas_id = id_[0]
+		#		combinedInfo = info[0] + " " + info[1]
+		#		klas_information.append([klas_id, combinedInfo])
+
+
+
+
+
 	elif option == "leraren":
 		leraarArray = get_leraren()
+		#update form
+		leraar_id = get_leraar_id()
+		updateLeraarForm.update_id.choices = leraar_id
 
 
 
@@ -97,7 +136,6 @@ def intranet(option='richtingen'):
 			to_do = ""
 			note = ""
 			url = ""
-			refresh = 0
 
 #CRUD RICHTINGEN
 			if whichForm == 'Richting Aanmaken':
@@ -107,20 +145,18 @@ def intranet(option='richtingen'):
 								request.form.get('description')]
 					to_do = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
 					note = "Richting aangemaakt!"
-					refresh = 1;
 					url = '/richtingen'
 				else:
 					note = "Not valid! Try again"
 
 			elif whichForm == 'Update Richting':
+				url = '/richtingen'
 				if richtingForm.validate():
 					formValue =	[request.form.get('naam'), 
 								request.form.get('description'),
 								request.form.get('update_id')]
 					to_do = "UPDATE richtingen SET name = ?, description = ? where richting_id = ?"
 					note = "Richting geupdate!"
-					refresh = 1;
-					url = '/richtingen'
 				else:
 					note = "Not valid! Try again"
 
@@ -128,7 +164,6 @@ def intranet(option='richtingen'):
 				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
 				note = "Richting gedelete!"
-				refresh = 1;
 				url = '/richtingen'
 
 #CRUD KLASSEN
@@ -137,20 +172,20 @@ def intranet(option='richtingen'):
 								request.form.get('richting')]
 					to_do = "INSERT INTO klassen (jaar,richting_id) VALUES (?, ?)"
 					note = "Klas aangemaakt!"
-					refresh = 1;
 					url = '/klassen'
-			elif whichForm == 'Update Klas': 
-				formValue = []
-				to_do = ""
-				note = "Klas geupdate!"
-				refresh = 1;
-				url = '/klassen'
+
+			elif whichForm == 'Update Klas':
+					formValue =	[request.form.get('naam'), 
+								request.form.get('description'),
+								request.form.get('update_id')]
+					to_do = "UPDATE richtingen SET name = ?, description = ? where richting_id = ?"
+					note = "Richting geupdate!"
+					url = '/klassen'
 
 			elif whichForm == 'Delete Klas':
 				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM klassen WHERE klas_id = ?"
 				note = "Klas gedelete!"
-				refresh = 1;
 				url = '/klassen'
 
 #CRUD LERAAR
@@ -163,22 +198,28 @@ def intranet(option='richtingen'):
 								request.form.get('vakken')]
 					to_do = "INSERT INTO leraren (voornaam,naam,email,vakken) VALUES (?, ?, ?, ?)"
 					note = "Leraar aangemaakt!"
-					refresh = 1;					
+					
 				else:
 					note = "Not valid! Try again"
 
 			elif whichForm == 'Update Leraar':
-				formValue = []
-				to_do = ""
-				note = "Leraar geupdate!"
-				refresh = 1;
 				url = '/leraren'
+				if leraarForm.validate():
+					formValue =	[request.form.get('voornaam'), 
+								request.form.get('achternaam'),
+								request.form.get('email'),
+								request.form.get('vakken'),
+								request.form.get('update_id')]
+					to_do = "UPDATE leraren SET voornaam = ?, naam = ?, email = ?, vakken = ? where leraar_id = ?"
+					note = "Richting geupdate!"
+					
+				else:
+					note = "Not valid! Try again"
 
 			elif whichForm == 'Delete Leraar':
 				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM leraren WHERE leraar_id = ?"
 				note = "Leraar gedelete!"
-				refresh = 1;
 				url = '/leraren'
 
 
@@ -188,12 +229,12 @@ def intranet(option='richtingen'):
 			db.commit()
 			flash(note)
 
-			#fix this: only refresh if succesfully through validator, otherwise validate errors aren't shown
+			#fix this: only refresh if succesfully through validator, otherwise validate errors aren't shown, flash workaround
 			return redirect(url_for('intranet') + url)
 	except KeyError:
 		return 'error'
 
-	return set_cookie(render_template('intranet.html', option=option, leraarArray=leraarArray, aanbodArray=aanbodArray, klasArray=klasArray, leraarForm=leraarForm, richtingForm=richtingForm, klasForm=klasForm, updateForm=updateForm))
+	return set_cookie(render_template('intranet.html', option=option, leraarArray=leraarArray, aanbodArray=aanbodArray, klasArray=klasArray, leraarForm=leraarForm, richtingForm=richtingForm, klasForm=klasForm, updateRichtingForm=updateRichtingForm, updateKlasForm=updateKlasForm, updateLeraarForm=updateLeraarForm))
 
 
 
@@ -290,6 +331,15 @@ def get_klassen():
 		klasArray.append( row )
 	return klasArray
 
+def get_klas_info():
+	db = get_db()
+	klassen = db.execute('SELECT klassen.jaar, richtingen.name FROM klassen INNER JOIN richtingen ON klassen.richting_id = richtingen.richting_id')
+	db.commit()
+	klasArray = []
+	for row in klassen:
+		klasArray.append( row )
+	return klasArray
+
 def get_richting_id():
 	db = get_db()
 	id_ = db.execute('SELECT richting_id, name FROM richtingen')
@@ -301,7 +351,7 @@ def get_richting_id():
 
 def get_klas_id():
 	db = get_db()
-	id_ = db.execute('SELECT klas_id, name FROM klassen')
+	id_ = db.execute('SELECT klas_id FROM klassen')
 	db.commit()
 	ids = []
 	for row in id_:
@@ -310,7 +360,7 @@ def get_klas_id():
 
 def get_leraar_id():
 	db = get_db()
-	id_ = db.execute('SELECT leraren_id, name FROM leraren')
+	id_ = db.execute('SELECT leraar_id, naam FROM leraren')
 	db.commit()
 	ids = []
 	for row in id_:

@@ -26,5 +26,11 @@ class CreateLeraarForm(Form):
 	vakken = StringField('Vakken', [validators.Length(min=3, max=35), validators.required()])
 
 
-class UpdateForm(Form):
+class UpdateRichtingForm(Form):
 	update_id = SelectField(u'Richting', choices=[], coerce=int)
+
+class UpdateKlasForm(Form):
+	update_id = SelectField(u'Klas', choices=[], coerce=int)
+
+class UpdateLeraarForm(Form):
+	update_id = SelectField(u'Leraar', choices=[], coerce=int)

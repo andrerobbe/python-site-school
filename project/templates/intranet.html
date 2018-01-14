@@ -11,12 +11,17 @@
 	<div class="wrapper cfx">
 		<div>
 			<ul id="nav">
-				<li {% if option == 'Richtingen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/richtingen">Richtingen</a></li>
-				<li {% if option == 'Klassen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/klassen">Klassen</a></li>
-				<li {% if option == 'Leraren' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/leraren">Leraren</a></li>			
+				<li {% if option == 'richtingen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/richtingen">Richtingen</a></li>
+				<li {% if option == 'klassen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/klassen">Klassen</a></li>
+				<li {% if option == 'leraren' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/leraren">Leraren</a></li>			
 			</ul>
 		</div>
 		<div>
+<!--
+#######################################################
+##################### RICHTINGEN ######################
+#######################################################
+-->
 			{% if option == 'richtingen' %}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
@@ -30,7 +35,7 @@
 			<form method="post" action="{{ url_for('intranet') }}" class="new update">
 				<p><input type="submit" name='button' value="Update Richting">
 				<dl>
-					{{ render_field(updateForm.update_id)}}
+					{{ render_field(updateRichtingForm.update_id)}}
 					{{ render_field(richtingForm.naam) }}
 					{{ render_field(richtingForm.description) }}
 				</dl>
@@ -50,12 +55,25 @@
 				</li>
 				{% endfor %}
 			</ul>
-
+<!--
+#######################################################
+####################### KLASSEN #######################
+#######################################################
+-->
 			{% elif option == 'klassen'%}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
 				<p><input type="submit" name='button' value="Klas Aanmaken">
 				<dl>
+					{{ render_field(klasForm.jaar) }}
+					{{ render_field(klasForm.richting) }}
+				</dl>
+			</form>
+			<h4>Update:</h4>
+			<form method="post" action="{{ url_for('intranet') }}" class="new update">
+				<p><input type="submit" name='button' value="Update Klas">
+				<dl>
+					{{ render_field(updateKlasForm.update_id)}}
 					{{ render_field(klasForm.jaar) }}
 					{{ render_field(klasForm.richting) }}
 				</dl>
@@ -73,11 +91,28 @@
 				{% endfor %}
 			</ul>
 
+
+<!--
+#######################################################
+######################### LERAREN #####################
+#######################################################
+-->
 			{% elif option == 'leraren' %}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
 				<p><input type="submit" name='button' value="Leraar Aanmaken">
 				<dl>
+					{{ render_field(leraarForm.voornaam) }}
+					{{ render_field(leraarForm.achternaam) }}
+					{{ render_field(leraarForm.email) }}
+					{{ render_field(leraarForm.vakken) }}
+				</dl>
+			</form>
+			<h4>Update:</h4>
+			<form method="post" action="{{ url_for('intranet') }}" class="new update">
+				<p><input type="submit" name='button' value="Update Leraar">
+				<dl>
+					{{ render_field(updateLeraarForm.update_id)}}
 					{{ render_field(leraarForm.voornaam) }}
 					{{ render_field(leraarForm.achternaam) }}
 					{{ render_field(leraarForm.email) }}
@@ -104,10 +139,7 @@
 						<input name="delete-id" value="{% for info in leraar %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 						<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
 					</form>
-					<form method="post" action="{{ url_for('intranet') }}" class="delete">
-						<p><input type="submit" name='button' value="Update Leraar"></p>
-						<input name="delete-id" value="{% for info in leraar %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
-					</form>
+
 				</li>
 				{% endfor %}
 			</ul>
