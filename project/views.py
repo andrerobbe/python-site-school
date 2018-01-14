@@ -140,6 +140,7 @@ def session_add_page(currentPage=None):
 	if 'page' in session.keys():
 		page_list = session['page']
 		page_list.append(currentPage)
+		page_list = page_list[-10:] # only last 10 pages into session, : to avoid error if empty
 		session['page'] = page_list
 	else:	
 		session['page'] = [currentPage]
@@ -153,8 +154,11 @@ def session_reset():
 
 @app.route('/session_show')
 def session_show():
-	flash("Uw laatst bekenen pagina's zijn: ")
-	flash(str(session['page']))
+	pages = ""
+	for page in session['page']:
+		pages += page + ", "
+	flash("Uw 10 laatst bekenen pagina's zijn: ")
+	flash(pages)
 	return redirect(url_for('home'))
 
 

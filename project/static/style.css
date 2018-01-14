@@ -347,7 +347,11 @@ footer a:hover {
 }
 
 
-/* CREATE FORM ON INTRANET*/
+/* 
+###################
+# CREATE RICHTING #
+###################
+*/
 #intranet > div { /*flash */
 	margin-bottom: 20px !important;
 	min-height: 33px;
@@ -399,7 +403,8 @@ footer a:hover {
 	font-size: 1em;
 	transition: 0.15s all;
 }
-#intranet .new p input:hover{
+#intranet .new p input:hover,
+#intranet .delete p input:hover{
 	background-color: #FEE0C1 !important;
 }
 #intranet .new dd input, #intranet .new dd textarea{
@@ -416,15 +421,31 @@ footer a:hover {
 }
 
 
-/* ############# DELETE ON INTRANET ############## */
+/*
+###################
+# DELETE RICHTING #
+################### */
 .delete {
 	float: right;
 	position: relative;
 	margin-top: -40px;
 	top: 40px;
 }
-#intranet .dropdown{
-	width: 450px;
+
+.delete p input{
+	/* DEFAULT STYLING RESET */
+	background: none !important;
+	color: inherit;
+	border: none;
+	font: inherit;
+	outline: inherit !important;
+
+	border: 2px solid #FAB56B;
+	padding: 2px 20px;
+	font-size: 1em;
+	transition: 0.15s all;
+	z-index: 10;
+	position: relative;
 }
 
 
