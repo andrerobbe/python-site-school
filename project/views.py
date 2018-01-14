@@ -2,6 +2,8 @@ from project import app
 from flask import render_template, request, flash, redirect, g, url_for, session
 
 import sqlite3
+import datetime
+
 from forms import MyForm
 
 
@@ -13,7 +15,8 @@ from forms import MyForm
 def home():
 	get_cookie()
 	session_add_page('home')
-	return set_cookie(render_template('home.html'))
+	msg = get_time()
+	return set_cookie(render_template('home.html', msg=msg))
 
 
 @app.route('/aanbod')
@@ -65,7 +68,7 @@ def intranet(option='Richtingen'):
 
 	try:
 		form = MyForm(request.form)
-		if request.method == 'POST': #AND FORM.VALIDATE() IS EEN PROBLEEEM?????
+		if request.method == 'POST':
 			whichForm = request.form.get('button')
 
 			to_do = ""
@@ -73,6 +76,7 @@ def intranet(option='Richtingen'):
 			form.value = []
 
 			if whichForm == 'Aanmaken':
+				#if form.validate():
 				form.value =	[request.form.get('naam'), 
 								request.form.get('description')]
 				to_do = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
@@ -82,7 +86,6 @@ def intranet(option='Richtingen'):
 				form.value = [request.form.get('delete-id')]
 				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
 				note = "Richting gedelete!"
-				print form.value
 
 			if whichForm == 'Update':
 				print "update"
@@ -92,6 +95,7 @@ def intranet(option='Richtingen'):
 			db.execute(to_do, (form.value));
 			db.commit()
 			flash(note)
+			return redirect(url_for('intranet'))
 	except KeyError:
 		return 'error'
 
@@ -100,7 +104,7 @@ def intranet(option='Richtingen'):
 
 
 """
-	DATABASE
+	DATABASE CONNECTION
 """
 def connect_db():
 	db = sqlite3.connect('school.db')
@@ -191,3 +195,22 @@ def get_klassen():
 	for row in klassen:
 		klasArray.append( row )
 	return klasArray
+
+
+
+
+"""
+	OTHER FUNCTIONS
+"""
+def get_time():
+	now = datetime.datetime.now()
+	msg = ""
+	if now.hour > 0:
+		msg = "goede nacht"
+	if now.hour > 6:
+		msg = "goede morgen"
+	if now.hour > 12:
+		msg = "goede middag"
+	if now.hour > 18:
+		msg = "goede avond"
+	return msg

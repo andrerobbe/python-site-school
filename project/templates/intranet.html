@@ -32,7 +32,7 @@
 					<li>
 						<div>
 							<form method="post" action="{{ url_for('intranet') }}" class="delete">
-								<p><input type="submit" name='button' value="Delete"></p>
+								<p><input type="submit" name='button' value="Delete" class="deletebtn"></p>
 								<input name="delete-id" value="{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 								<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
 							</form>
