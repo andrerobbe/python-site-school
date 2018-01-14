@@ -359,15 +359,15 @@ footer a:hover {
 #intranet h4{
 	float: left;
 	margin-right: 50px;
-	margin-top: 20px;
+	margin-top: 0;
 	font-size: 24px;
 }
 
 #intranet .new{
-	margin-bottom: 50px;
 	float: left;
 	width: 475px;
 	padding-left: 50px;
+	margin-top: 40px;
 }
 #intranet .new dt{
 	margin: 1.4em 0 0.2em;
@@ -401,13 +401,14 @@ footer a:hover {
 }
 #intranet .new p input{ /* SEND BUTTON */
 	border: 2px solid #FAB56B;
-	padding: 6px 10px;
+	padding: 3px 10px;
 	position: relative;
-	top: 100px;
+	top: 13px;
 	left: -100px;
 	transform: translateX(-50%);
 	font-size: 1em;
 	transition: 0.15s all;
+	width: 180px;
 }
 #intranet .new p input:hover,
 #intranet .delete p input:hover{
@@ -474,4 +475,15 @@ footer a:hover {
 
 #intranet .people {
 	margin-top: 370px;
+}
+
+/* 
+###################
+# UPDATE RICHTING #
+###################
+*/
+#intranet .update {
+	margin-left: 120px;
+	margin-bottom: 20px;
+	margin-top: 0;
 }

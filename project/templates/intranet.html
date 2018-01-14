@@ -7,6 +7,7 @@
 		{% from "_macros.html" import flashes %}
 		{{ flashes() }}
 	</div>
+	{% from "_macros.html" import render_field %}
 	<div class="wrapper cfx">
 		<div>
 			<ul id="nav">
@@ -20,8 +21,16 @@
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
 				<p><input type="submit" name='button' value="Richting Aanmaken">
-				{% from "_macros.html" import render_field %}
 				<dl>
+					{{ render_field(richtingForm.naam) }}
+					{{ render_field(richtingForm.description) }}
+				</dl>
+			</form>
+			<h4>Update:</h4>
+			<form method="post" action="{{ url_for('intranet') }}" class="new update">
+				<p><input type="submit" name='button' value="Update Richting">
+				<dl>
+					{{ render_field(updateForm.update_id)}}
 					{{ render_field(richtingForm.naam) }}
 					{{ render_field(richtingForm.description) }}
 				</dl>
@@ -46,7 +55,6 @@
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
 				<p><input type="submit" name='button' value="Klas Aanmaken">
-				{% from "_macros.html" import render_field %}
 				<dl>
 					{{ render_field(klasForm.jaar) }}
 					{{ render_field(klasForm.richting) }}
@@ -69,7 +77,6 @@
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
 				<p><input type="submit" name='button' value="Leraar Aanmaken">
-				{% from "_macros.html" import render_field %}
 				<dl>
 					{{ render_field(leraarForm.voornaam) }}
 					{{ render_field(leraarForm.achternaam) }}
@@ -96,6 +103,10 @@
 						<p><input type="submit" name='button' value="Delete Leraar" class="deletebtn"></p>
 						<input name="delete-id" value="{% for info in leraar %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 						<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
+					</form>
+					<form method="post" action="{{ url_for('intranet') }}" class="delete">
+						<p><input type="submit" name='button' value="Update Leraar"></p>
+						<input name="delete-id" value="{% for info in leraar %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 					</form>
 				</li>
 				{% endfor %}

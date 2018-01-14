@@ -24,3 +24,7 @@ class CreateLeraarForm(Form):
 	achternaam = StringField('Achternaam', [validators.Length(min=3, max=35), validators.required()])
 	email = EmailField('Email addres', [validators.Email(), validators.DataRequired()])
 	vakken = StringField('Vakken', [validators.Length(min=3, max=35), validators.required()])
+
+
+class UpdateForm(Form):
+	update_id = SelectField(u'Richting', choices=[], coerce=int)
