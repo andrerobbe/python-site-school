@@ -401,7 +401,7 @@ footer a:hover {
 }
 #intranet .new p input{ /* SEND BUTTON */
 	border: 2px solid #FAB56B;
-	padding: 6px 30px;
+	padding: 6px 10px;
 	position: relative;
 	top: 100px;
 	left: -100px;

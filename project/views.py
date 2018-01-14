@@ -93,7 +93,7 @@ def intranet(option='richtingen'):
 			print whichForm
 
 #CRUD RICHTINGEN
-			if whichForm == 'aanmaken-richting':
+			if whichForm == 'Richting Aanmaken':
 				url = '/richtingen'
 				if richtingForm.validate():
 					formValue =	[request.form.get('naam'), 
@@ -104,14 +104,14 @@ def intranet(option='richtingen'):
 				else:
 					note = "Not valid! Try again"
 
-			elif whichForm == 'delete-richting':
+			elif whichForm == 'Delete Richting':
 				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
 				note = "Richting gedelete!"
 				refresh = 1;
 				url = '/richtingen'
 
-			elif whichForm == 'update-richting':
+			elif whichForm == 'Update Richting':
 				formValue = []
 				to_do = ""
 				note = "Richting geupdate!"
@@ -119,7 +119,7 @@ def intranet(option='richtingen'):
 				url = '/richtingen'
 
 #CRUD KLASSEN
-			elif whichForm == 'aanmaken-klas':
+			elif whichForm == 'Klas Aanmaken':
 					formValue =	[request.form.get('jaar'), 
 								request.form.get('richting')]
 					to_do = "INSERT INTO klassen (jaar,richting_id) VALUES (?, ?)"
@@ -127,14 +127,14 @@ def intranet(option='richtingen'):
 					refresh = 1;
 					url = '/klassen'
 
-			elif whichForm == 'delete-klas':
+			elif whichForm == 'Delete Klas':
 				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM klassen WHERE klas_id = ?"
 				note = "Klas gedelete!"
 				refresh = 1;
 				url = '/klassen'
 
-			elif whichForm == 'update-klas': 
+			elif whichForm == 'Update Klas': 
 				formValue = []
 				to_do = ""
 				note = "Klas geupdate!"
@@ -142,7 +142,7 @@ def intranet(option='richtingen'):
 				url = '/klassen'
 
 #CRUD LERAAR
-			if whichForm == 'aanmaken-leraar':
+			if whichForm == 'Leraar Aanmaken':
 				url = '/leraren'
 				if leraarForm.validate():
 					formValue =	[request.form.get('voornaam'), 
@@ -155,27 +155,26 @@ def intranet(option='richtingen'):
 				else:
 					note = "Not valid! Try again"
 
-			elif whichForm == 'delete-leraar':
+			elif whichForm == 'Delete Leraar':
 				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM leraren WHERE leraar_id = ?"
 				note = "Leraar gedelete!"
 				refresh = 1;
 				url = '/leraren'
 
-			elif whichForm == 'update-lereaar':
+			elif whichForm == 'Update Lereaar':
 				formValue = []
 				to_do = ""
 				note = "Leraar geupdate!"
 				refresh = 1;
 				url = '/leraren'
 
-
 			db = get_db()
 			db.execute(to_do, (formValue));
 			db.commit()
 			flash(note)
 
-			#only refresh if succesfully through validator, otherwise validate errors aren't shown
+			#fix this: only refresh if succesfully through validator, otherwise validate errors aren't shown
 			return redirect(url_for('intranet') + url)
 	except KeyError:
 		return 'error'

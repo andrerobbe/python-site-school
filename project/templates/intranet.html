@@ -19,7 +19,7 @@
 			{% if option == 'richtingen' %}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
-				<p><input type="submit" name='button' value="aanmaken-richting">
+				<p><input type="submit" name='button' value="Richting Aanmaken">
 				{% from "_macros.html" import render_field %}
 				<dl>
 					{{ render_field(richtingForm.naam) }}
@@ -31,7 +31,7 @@
 				<li>
 					<div>
 						<form method="post" action="{{ url_for('intranet') }}" class="delete">
-							<p><input type="submit" name='button' value="delete-richting" class="deletebtn"></p>
+							<p><input type="submit" name='button' value="Delete Richting" class="deletebtn"></p>
 							<input name="delete-id" value="{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 							<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
 						</form>
@@ -45,7 +45,7 @@
 			{% elif option == 'klassen'%}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
-				<p><input type="submit" name='button' value="aanmaken-klas">
+				<p><input type="submit" name='button' value="Klas Aanmaken">
 				{% from "_macros.html" import render_field %}
 				<dl>
 					{{ render_field(klasForm.jaar) }}
@@ -56,7 +56,7 @@
 				{% for klas in klasArray %}
 				<li>
 					<form method="post" action="{{ url_for('intranet') }}" class="delete">
-						<p><input type="submit" name='button' value="delete-klas" class="deletebtn"></p>
+						<p><input type="submit" name='button' value="Delete Klas" class="deletebtn"></p>
 						<input name="delete-id" value="{% for info in klas %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 						<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
 					</form>
@@ -68,7 +68,7 @@
 			{% elif option == 'leraren' %}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
-				<p><input type="submit" name='button' value="aanmaken-leraar">
+				<p><input type="submit" name='button' value="Leraar Aanmaken">
 				{% from "_macros.html" import render_field %}
 				<dl>
 					{{ render_field(leraarForm.voornaam) }}
@@ -93,7 +93,7 @@
 
 					</div>
 					<form method="post" action="{{ url_for('intranet') }}" class="delete">
-						<p><input type="submit" name='button' value="delete-leraar" class="deletebtn"></p>
+						<p><input type="submit" name='button' value="Delete Leraar" class="deletebtn"></p>
 						<input name="delete-id" value="{% for info in leraar %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 						<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
 					</form>
