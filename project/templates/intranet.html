@@ -10,13 +10,13 @@
 	<div class="wrapper cfx">
 		<div>
 			<ul id="nav">
-				<li {% if option == 'Richtingen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/Richtingen">Richtingen</a></li>
-				<li {% if option == 'Klassen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/Klassen">Klassen</a></li>
-				<li {% if option == 'Leraren' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/Leraren">Leraren</a></li>			
+				<li {% if option == 'Richtingen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/richtingen">Richtingen</a></li>
+				<li {% if option == 'Klassen' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/klassen">Klassen</a></li>
+				<li {% if option == 'Leraren' %}class="active"{% endif %}><a href="{{ url_for('intranet') }}/leraren">Leraren</a></li>			
 			</ul>
 		</div>
 		<div>
-			{% if option == 'Richtingen' %}
+			{% if option == 'richtingen' %}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
 				<p><input type="submit" name='button' value="aanmaken-richting">
@@ -28,21 +28,21 @@
 			</form>
 			<ul class="study cfx">
 				{% for richting in aanbodArray %}
-					<li>
-						<div>
-							<form method="post" action="{{ url_for('intranet') }}" class="delete">
-								<p><input type="submit" name='button' value="delete-richting" class="deletebtn"></p>
-								<input name="delete-id" value="{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
-								<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
-							</form>
-							<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</h3></button>
-							<p>{% for info in richting %}{% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</p>
-						</div>
-					</li>
+				<li>
+					<div>
+						<form method="post" action="{{ url_for('intranet') }}" class="delete">
+							<p><input type="submit" name='button' value="delete-richting" class="deletebtn"></p>
+							<input name="delete-id" value="{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
+							<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
+						</form>
+						<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</h3></button>
+						<p>{% for info in richting %}{% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</p>
+					</div>
+				</li>
 				{% endfor %}
 			</ul>
 
-			{% elif option == 'Klassen'%}
+			{% elif option == 'klassen'%}
 			<h4>Nieuw:</h4>
 			<form method="post" action="{{ url_for('intranet') }}" class="new">
 				<p><input type="submit" name='button' value="aanmaken-klas">
@@ -54,31 +54,50 @@
 			</form>
 			<ul class="klassen">
 				{% for klas in klasArray %}
-				<form method="post" action="{{ url_for('intranet') }}" class="delete">
-					<p><input type="submit" name='button' value="delete-klas" class="deletebtn"></p>
-					<input name="delete-id" value="{% for info in klas %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
-					<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
-				</form>
-				<li><p>{% for info in klas %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %} {% for info in klas %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p></li>
+				<li>
+					<form method="post" action="{{ url_for('intranet') }}" class="delete">
+						<p><input type="submit" name='button' value="delete-klas" class="deletebtn"></p>
+						<input name="delete-id" value="{% for info in klas %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
+						<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
+					</form>
+					<p>{% for info in klas %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %} {% for info in klas %}{% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</p>
+				</li>
 				{% endfor %}
 			</ul>
 
-			{% elif option == 'Leraren' %}
+			{% elif option == 'leraren' %}
+			<h4>Nieuw:</h4>
+			<form method="post" action="{{ url_for('intranet') }}" class="new">
+				<p><input type="submit" name='button' value="aanmaken-leraar">
+				{% from "_macros.html" import render_field %}
+				<dl>
+					{{ render_field(form.voornaam) }}
+					{{ render_field(form.achternaam) }}
+					{{ render_field(form.email) }}
+					{{ render_field(form.vakken) }}
+				</dl>
+			</form>
 			<ul class="people">
 				{% for leraar in leraarArray %}
-					<li>
-						<img src="../static/img/leraren/{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}-{% for info in leraar %}{% if loop.index == 3 %}{{info}}{% endif %}{% endfor %}.jpg" 
-						alt="{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %} {% for info in leraar %}{% if loop.index == 3 %}{{info}}{% endif %}{% endfor %}">
-						<div>
-							<h3>{% for info in leraar %}{% if loop.index == 2 %}{{ info }}{% endif %} {% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</h3>
-							{% for info in leraar %}
-								{% if loop.index == 4 %}<p>E-mail: <a href="mailto:{{ info }}">{{ info }}</a></p>{% endif %}
-								{% if loop.index == 5 %}
-									<p>Geeft les in: {{info}}</p>
-								{% endif %}
-							{% endfor %}
-						</div>
-					</li>
+				<li>
+					<img src="../static/img/leraren/{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}-{% for info in leraar %}{% if loop.index == 3 %}{{info}}{% endif %}{% endfor %}.jpg" 
+					alt="{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %} {% for info in leraar %}{% if loop.index == 3 %}{{info}}{% endif %}{% endfor %}">
+					<div>
+						<h3>{% for info in leraar %}{% if loop.index == 2 %}{{ info }}{% endif %} {% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</h3>
+						{% for info in leraar %}
+							{% if loop.index == 4 %}<p>E-mail: <a href="mailto:{{ info }}">{{ info }}</a></p>{% endif %}
+							{% if loop.index == 5 %}
+								<p>Geeft les in: {{info}}</p>
+							{% endif %}
+						{% endfor %}
+
+					</div>
+					<form method="post" action="{{ url_for('intranet') }}" class="delete">
+						<p><input type="submit" name='button' value="delete-leraar" class="deletebtn"></p>
+						<input name="delete-id" value="{% for info in leraar %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
+						<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
+					</form>
+				</li>
 				{% endfor %}
 			</ul>
 			{% endif %}

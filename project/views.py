@@ -60,14 +60,14 @@ def contact():
 
 @app.route('/intranet', methods=['GET', 'POST'])
 @app.route('/intranet/<option>', methods=['GET', 'POST'])
-def intranet(option='Richtingen'):
+def intranet(option='richtingen'):
 	session_add_page('intranet')
 	leraarArray = get_leraren()
 	aanbodArray = get_aanbod()
 	klasArray = get_klassen()
 
 	form = MyForm(request.form)
-	if option == "Klassen":
+	if option == "klassen":
 		richtingArray = get_richting_id()
 		form.richting.choices = richtingArray
 
@@ -79,38 +79,72 @@ def intranet(option='Richtingen'):
 			form.value = []
 			url = ""
 
+#CRUD RICHTINGEN
 			if whichForm == 'aanmaken-richting':
 				#if form.validate():
 				form.value =	[request.form.get('naam'), 
 								request.form.get('description')]
 				to_do = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
 				note = "Richting aangemaakt!"
-				url = "/Richtingen"
+				url = "/richtingen"
 
 			elif whichForm == 'delete-richting':
 				form.value = [request.form.get('delete-id')]
 				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
 				note = "Richting gedelete!"
-				url = "/Richtingen"
+				url = "/richtingen"
 
 			elif whichForm == 'update-richting':
-				
-				url = "/Richtingen"
-				return
+				form.value = []
+				to_do = ""
+				note = "Richting geupdate!"
+				url = "/richtingen"
 
+#CRUD KLASSEN
 			elif whichForm == 'aanmaken-klas':
 				#if form.validate():
 				form.value =	[request.form.get('jaar'), 
 								request.form.get('richting')]
 				to_do = "INSERT INTO klassen (jaar,richting_id) VALUES (?, ?)"
 				note = "Klas aangemaakt!"
-				url = "/Klassen"
+				url = "/klassen"
 
 			elif whichForm == 'delete-klas':
 				form.value = [request.form.get('delete-id')]
-				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
-				note = "Richting gedelete!"
-				url = "/Klassen"
+				to_do = "DELETE FROM klassen WHERE klas_id = ?"
+				note = "Klas gedelete!"
+				url = "/klassen"
+
+			elif whichForm == 'update-klas':
+				form.value = []
+				to_do = ""
+				note = "Klas geupdate!"
+				url = "/klassen"
+
+#CRUD LERAAR
+			elif whichForm == 'aanmaken-leraar':
+				#if form.validate():
+				form.value =	[request.form.get('voornaam'), 
+								request.form.get('achternaam'),
+								request.form.get('email'),
+								request.form.get('vakken')]
+				to_do = "INSERT INTO leraren (voornaam,naam,email,vakken) VALUES (?, ?, ?, ?)"
+				note = "Leraar aangemaakt!"
+				url = "/leraren"
+
+			elif whichForm == 'delete-leraar':
+				form.value = [request.form.get('delete-id')]
+				to_do = "DELETE FROM leraren WHERE leraar_id = ?"
+				note = "Leraar gedelete!"
+				url = "/leraren"
+
+			elif whichForm == 'update-lereaar':
+				form.value = []
+				to_do = ""
+				note = "Leraar geupdate!"
+				url = "/leraren"
+
+
 
 			db = get_db()
 			db.execute(to_do, (form.value));
@@ -210,7 +244,7 @@ def get_aanbod():
 
 def get_klassen():
 	db = get_db()
-	klassen = db.execute('SELECT klassen.jaar, richtingen.name FROM klassen INNER JOIN richtingen ON klassen.richting_id = richtingen.richting_id')
+	klassen = db.execute('SELECT klassen.klas_id, klassen.jaar, richtingen.name FROM klassen INNER JOIN richtingen ON klassen.richting_id = richtingen.richting_id')
 	db.commit()
 	klasArray = []
 	for row in klassen:

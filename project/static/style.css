@@ -456,15 +456,22 @@ footer a:hover {
 ###################
 */
 
-
-
 #intranet .new dd select{
 	padding: 5px 5px;
 }
 
+#intranet .klassen .delete p input{
+	padding-top: 0;
+	padding-bottom: 0;
+	line-height: 110%;
+}
 
+/* 
+###################
+# CREATE LERAAR ##
+###################
+*/
 
-/* ############## KLASSEN  ############### */
-
-
-/* ############## LERAREN ################ */
+#intranet .people {
+	margin-top: 370px;
+}
