@@ -73,7 +73,7 @@ def intranet(option='richtingen'):
 	updateLeraarForm 	= UpdateLeraarForm(request.form)
 
 
-	#get info + set update choices
+#get info + set update choices
 	if option == "richtingen":
 		aanbodArray = get_aanbod()
 		#update form
@@ -86,39 +86,18 @@ def intranet(option='richtingen'):
 		richting_ids = get_richting_id()
 		klasForm.richting.choices = richting_ids
 
-
 		#update form
-		#klas_id = []
-		#klas_info = []
-		#for klas in klasArray:
-		#	klas_id.append(klas[0])
-		#	klas_info.append(klas[1])
-		#	klas_info.append(klas[2])
-			#for element in klas:
-				#print element
-		#print klas_info
-		#updateKlasForm.update_id.choices = klas_id
+		klas_info = get_klas_info()
+		klas_id = get_klas_id()
+		klas_information = []
 
-		#for idx, klas in enumerate(klasArray):
-		#	if idx == 0:
-		#		for info in klas:
-		#			klas_id.append(klas[0])
-		#print klas_id
-		#print klas_info
-
-		#print richting_ids
-		#klas_info = get_klas_info()
-		#klas_id = get_klas_id()
-		#klas_information = []
-		#for info in klas_info:
-		#	for id_ in klas_id:
-		#		klas_id = id_[0]
-		#		combinedInfo = info[0] + " " + info[1]
-		#		klas_information.append([klas_id, combinedInfo])
-
-
-
-
+		for info in klas_info:
+			for id_ in klas_id:
+				klas_id_str = id_[0]
+				combinedInfo = info[0] + " " + info[1]
+				print combinedInfo
+			klas_information.append([klas_id_str, combinedInfo])
+		updateKlasForm.update_id.choices = klas_information
 
 	elif option == "leraren":
 		leraarArray = get_leraren()
@@ -175,11 +154,11 @@ def intranet(option='richtingen'):
 					url = '/klassen'
 
 			elif whichForm == 'Update Klas':
-					formValue =	[request.form.get('naam'), 
-								request.form.get('description'),
+					formValue =	[request.form.get('jaar'), 
+								request.form.get('richting'),
 								request.form.get('update_id')]
-					to_do = "UPDATE richtingen SET name = ?, description = ? where richting_id = ?"
-					note = "Richting geupdate!"
+					to_do = "UPDATE klassen SET jaar = ?, richting_id = ? where klas_id = ?"
+					note = "Klas geupdate!"
 					url = '/klassen'
 
 			elif whichForm == 'Delete Klas':
