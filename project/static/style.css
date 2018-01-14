@@ -352,9 +352,11 @@ footer a:hover {
 	margin-bottom: 20px !important;
 	min-height: 33px;
 }
-#intranet h3{
+#intranet h4{
 	float: left;
 	margin-right: 50px;
+	margin-top: 20px;
+	font-size: 24px;
 }
 
 #intranet .new{

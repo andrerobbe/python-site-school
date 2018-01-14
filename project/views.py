@@ -66,20 +66,32 @@ def intranet(option='Richtingen'):
 	try:
 		form = MyForm(request.form)
 		if request.method == 'POST': #AND FORM.VALIDATE() IS EEN PROBLEEEM?????
-			whichForm´= request.form.get('button')
-			
+			whichForm = request.form.get('button')
 
+			to_do = ""
+			note = ""
+			form.value = []
 
+			if whichForm == 'Aanmaken':
+				form.value =	[request.form.get('naam'), 
+								request.form.get('description')]
+				to_do = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
+				note = "Richting aangemaakt!"
 
+			if whichForm == 'Delete':
+				form.value = [request.form.get('delete-id')]
+				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
+				note = "Richting gedelete!"
+				print form.value
 
-			form.value = 	[request.form.get('naam'), 
-							request.form.get('description')]
-			to_add = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
+			if whichForm == 'Update':
+				print "update"
+				return
 
-			#db = get_db()
-			#db.execute(to_add, (form.value));
-			#db.commit()
-			flash('Richting Aangemaakt!')
+			db = get_db()
+			db.execute(to_do, (form.value));
+			db.commit()
+			flash(note)
 	except KeyError:
 		return 'error'
 
@@ -151,7 +163,7 @@ def session_show():
 """
 def get_leraren():
 	db = get_db()
-	leraren = db.execute('SELECT voornaam, naam, email, vakken FROM leraren')
+	leraren = db.execute('SELECT * FROM leraren')
 	db.commit()
 	leraarArray = []
 	for row in leraren:
@@ -160,7 +172,7 @@ def get_leraren():
 
 def get_aanbod():
 	db = get_db()
-	aanbod = db.execute('SELECT name, description FROM richtingen')
+	aanbod = db.execute('SELECT * FROM richtingen')
 	db.commit()
 	aanbodArray = []
 	for row in aanbod:

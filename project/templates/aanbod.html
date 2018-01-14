@@ -8,8 +8,8 @@
 		{% for richting in aanbodArray %}
 			<li>
 				<div>
-					<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}</h3></button>
-					<p>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p>
+					<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</h3></button>
+					<p>{% for info in richting %}{% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</p>
 				</div>
 			</li>
 		{% endfor %}

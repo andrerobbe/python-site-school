@@ -18,7 +18,7 @@
 		<div>
 			{% if option == 'Richtingen' %}
 			<ul class="study cfx">
-				<h3>Nieuw:</h3>
+				<h4>Nieuw:</h4>
 				<form method="post" action="{{ url_for('intranet') }}" class="new">
 					<p><input type="submit" name='button' value="Aanmaken">
 					{% from "_macros.html" import render_field %}
@@ -33,9 +33,11 @@
 						<div>
 							<form method="post" action="{{ url_for('intranet') }}" class="delete">
 								<p><input type="submit" name='button' value="Delete"></p>
+								<input name="delete-id" value="{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
+								<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
 							</form>
-							<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}</h3></button>
-							<p>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p>
+							<button class="dropdown"><h3><span>></span>{% for info in richting %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</h3></button>
+							<p>{% for info in richting %}{% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</p>
 						</div>
 					</li>
 				{% endfor %}
@@ -52,19 +54,16 @@
 			<ul class="people">
 				{% for leraar in leraarArray %}
 					<li>
-						<img src="../static/img/leraren/{% for info in leraar %}{% if loop.index == 1 %}{{info}}{% endif %}{% endfor %}-{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}.jpg" 
-						alt="{% for info in leraar %}{% if loop.index == 1 %}{{info}}{% endif %}{% endfor %} {% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}">
+						<img src="../static/img/leraren/{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %}-{% for info in leraar %}{% if loop.index == 3 %}{{info}}{% endif %}{% endfor %}.jpg" 
+						alt="{% for info in leraar %}{% if loop.index == 2 %}{{info}}{% endif %}{% endfor %} {% for info in leraar %}{% if loop.index == 3 %}{{info}}{% endif %}{% endfor %}">
 						<div>
-						{% for info in leraar %}
-							<h3>{% if loop.index == 1 %}{{ info }}{% endif %}{% if loop.index == 2 %}{{ info }}{% endif %}</h3>
-							{% if loop.index == 3 %}<p>Email: <a href="mailto:{{ info }}">{{ info }}</a></p>{% endif %}
-							{% if loop.index == 4 %}
-								<p>Geeft les in:</p>
-								<ul>
-									<li>{{info}}</li>
-								</ul>
-							{% endif %}
-						{% endfor %}
+							<h3>{% for info in leraar %}{% if loop.index == 2 %}{{ info }}{% endif %} {% if loop.index == 3 %}{{ info }}{% endif %}{% endfor %}</h3>
+							{% for info in leraar %}
+								{% if loop.index == 4 %}<p>E-mail: <a href="mailto:{{ info }}">{{ info }}</a></p>{% endif %}
+								{% if loop.index == 5 %}
+									<p>Geeft les in: {{info}}</p>
+								{% endif %}
+							{% endfor %}
 						</div>
 					</li>
 				{% endfor %}
