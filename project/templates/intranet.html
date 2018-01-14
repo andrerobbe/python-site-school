@@ -22,8 +22,8 @@
 				<p><input type="submit" name='button' value="aanmaken-richting">
 				{% from "_macros.html" import render_field %}
 				<dl>
-					{{ render_field(form.naam) }}
-					{{ render_field(form.description) }}
+					{{ render_field(richtingForm.naam) }}
+					{{ render_field(richtingForm.description) }}
 				</dl>
 			</form>
 			<ul class="study cfx">
@@ -48,8 +48,8 @@
 				<p><input type="submit" name='button' value="aanmaken-klas">
 				{% from "_macros.html" import render_field %}
 				<dl>
-					{{ render_field(form.jaar) }}
-					{{ render_field(form.richting) }}
+					{{ render_field(klasForm.jaar) }}
+					{{ render_field(klasForm.richting) }}
 				</dl>
 			</form>
 			<ul class="klassen">
@@ -71,10 +71,10 @@
 				<p><input type="submit" name='button' value="aanmaken-leraar">
 				{% from "_macros.html" import render_field %}
 				<dl>
-					{{ render_field(form.voornaam) }}
-					{{ render_field(form.achternaam) }}
-					{{ render_field(form.email) }}
-					{{ render_field(form.vakken) }}
+					{{ render_field(leraarForm.voornaam) }}
+					{{ render_field(leraarForm.achternaam) }}
+					{{ render_field(leraarForm.email) }}
+					{{ render_field(leraarForm.vakken) }}
 				</dl>
 			</form>
 			<ul class="people">

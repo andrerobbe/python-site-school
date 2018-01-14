@@ -4,7 +4,7 @@ from flask import render_template, request, flash, redirect, g, url_for, session
 import sqlite3
 import datetime
 
-from forms import MyForm
+from forms import ContactForm, CreateRichtingenForm, CreateKlasForm, CreateLeraarForm
 
 
 """
@@ -38,23 +38,23 @@ def wie():
 def contact():
 	session_add_page('contact')
 	try:
-		form = MyForm(request.form)
-		if request.method == 'POST' and form.validate():
-			form.value = 	[request.form.get('naam'), 
-							request.form.get('straat'), 
-							request.form.get('stad'), 
-							request.form.get('postcode'), 
-							request.form.get('phone'), 
-							request.form.get('msg')]
+		contactForm = ContactForm(request.form)
+		if request.method == 'POST' and contactForm.validate():
+			contactForm.value = [request.contactForm.get('naam'), 
+								request.contactForm.get('straat'), 
+								request.contactForm.get('stad'), 
+								request.contactForm.get('postcode'), 
+								request.contactForm.get('phone'), 
+								request.contactForm.get('msg')]
 			add_post = "INSERT INTO contact (naam,straat,stad,zip,phone,msg) VALUES (?, ?, ?, ?, ?, ? )"
 
 			db = get_db()
-			db.execute(add_post, (form.value));
+			db.execute(add_post, (contactForm.value));
 			db.commit()
 			flash('Bedankt voor het bericht!')
 	except KeyError:
 		return 'error'
-	return set_cookie(render_template('contact.html', form=form))
+	return set_cookie(render_template('contact.html', form=contactForm))
 
 
 
@@ -62,99 +62,124 @@ def contact():
 @app.route('/intranet/<option>', methods=['GET', 'POST'])
 def intranet(option='richtingen'):
 	session_add_page('intranet')
-	leraarArray = get_leraren()
-	aanbodArray = get_aanbod()
-	klasArray = get_klassen()
+	aanbodArray = ''
+	klasArray = ''
+	leraarArray = ''
+	richtingForm = CreateRichtingenForm(request.form)
+	klasForm = CreateKlasForm(request.form)
+	leraarForm = CreateLeraarForm(request.form)
 
-	form = MyForm(request.form)
-	if option == "klassen":
+	if option == "richtingen":
+		aanbodArray = get_aanbod()
+
+	elif option == "klassen":
+		klasArray = get_klassen()
 		richtingArray = get_richting_id()
-		form.richting.choices = richtingArray
+		klasForm.richting.choices = richtingArray
+
+	elif option == "leraren":
+		leraarArray = get_leraren()
+
 
 	try:
 		if request.method == 'POST':
 			whichForm = request.form.get('button')
+			formValue = []
 			to_do = ""
 			note = ""
-			form.value = []
-			url = ""
+			refresh = 0
+
+			print whichForm
 
 #CRUD RICHTINGEN
 			if whichForm == 'aanmaken-richting':
-				#if form.validate():
-				form.value =	[request.form.get('naam'), 
+				url = '/richtingen'
+				if richtingForm.validate():
+					formValue =	[request.form.get('naam'), 
 								request.form.get('description')]
-				to_do = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
-				note = "Richting aangemaakt!"
-				url = "/richtingen"
+					to_do = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
+					note = "Richting aangemaakt!"
+					refresh = 1;
+				else:
+					note = "Not valid! Try again"
 
 			elif whichForm == 'delete-richting':
-				form.value = [request.form.get('delete-id')]
+				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
 				note = "Richting gedelete!"
-				url = "/richtingen"
+				refresh = 1;
+				url = '/richtingen'
 
 			elif whichForm == 'update-richting':
-				form.value = []
+				formValue = []
 				to_do = ""
 				note = "Richting geupdate!"
-				url = "/richtingen"
+				refresh = 1;
+				url = '/richtingen'
 
 #CRUD KLASSEN
 			elif whichForm == 'aanmaken-klas':
-				#if form.validate():
-				form.value =	[request.form.get('jaar'), 
+					formValue =	[request.form.get('jaar'), 
 								request.form.get('richting')]
-				to_do = "INSERT INTO klassen (jaar,richting_id) VALUES (?, ?)"
-				note = "Klas aangemaakt!"
-				url = "/klassen"
+					to_do = "INSERT INTO klassen (jaar,richting_id) VALUES (?, ?)"
+					note = "Klas aangemaakt!"
+					refresh = 1;
+					url = '/klassen'
 
 			elif whichForm == 'delete-klas':
-				form.value = [request.form.get('delete-id')]
+				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM klassen WHERE klas_id = ?"
 				note = "Klas gedelete!"
-				url = "/klassen"
+				refresh = 1;
+				url = '/klassen'
 
-			elif whichForm == 'update-klas':
-				form.value = []
+			elif whichForm == 'update-klas': 
+				formValue = []
 				to_do = ""
 				note = "Klas geupdate!"
-				url = "/klassen"
+				refresh = 1;
+				url = '/klassen'
 
 #CRUD LERAAR
-			elif whichForm == 'aanmaken-leraar':
-				#if form.validate():
-				form.value =	[request.form.get('voornaam'), 
+			if whichForm == 'aanmaken-leraar':
+				url = '/leraren'
+				if leraarForm.validate():
+					formValue =	[request.form.get('voornaam'), 
 								request.form.get('achternaam'),
 								request.form.get('email'),
 								request.form.get('vakken')]
-				to_do = "INSERT INTO leraren (voornaam,naam,email,vakken) VALUES (?, ?, ?, ?)"
-				note = "Leraar aangemaakt!"
-				url = "/leraren"
+					to_do = "INSERT INTO leraren (voornaam,naam,email,vakken) VALUES (?, ?, ?, ?)"
+					note = "Leraar aangemaakt!"
+					refresh = 1;					
+				else:
+					note = "Not valid! Try again"
 
 			elif whichForm == 'delete-leraar':
-				form.value = [request.form.get('delete-id')]
+				formValue = [request.form.get('delete-id')]
 				to_do = "DELETE FROM leraren WHERE leraar_id = ?"
 				note = "Leraar gedelete!"
-				url = "/leraren"
+				refresh = 1;
+				url = '/leraren'
 
 			elif whichForm == 'update-lereaar':
-				form.value = []
+				formValue = []
 				to_do = ""
 				note = "Leraar geupdate!"
-				url = "/leraren"
-
+				refresh = 1;
+				url = '/leraren'
 
 
 			db = get_db()
-			db.execute(to_do, (form.value));
+			db.execute(to_do, (formValue));
 			db.commit()
 			flash(note)
+
+			#only refresh if succesfully through validator, otherwise validate errors aren't shown
 			return redirect(url_for('intranet') + url)
 	except KeyError:
 		return 'error'
 
-	return set_cookie(render_template('intranet.html', option=option, leraarArray=leraarArray, aanbodArray=aanbodArray, klasArray=klasArray, form=form))
+	return set_cookie(render_template('intranet.html', option=option, leraarArray=leraarArray, aanbodArray=aanbodArray, klasArray=klasArray, leraarForm=leraarForm, richtingForm=richtingForm, klasForm=klasForm))
 
 
 
