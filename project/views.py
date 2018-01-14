@@ -33,7 +33,6 @@ def wie():
 	return set_cookie(render_template('wie.html', leraarArray=leraarArray))
 
 
-
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
 	session_add_page('contact')
