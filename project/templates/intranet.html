@@ -17,22 +17,21 @@
 		</div>
 		<div>
 			{% if option == 'Richtingen' %}
+			<h4>Nieuw:</h4>
+			<form method="post" action="{{ url_for('intranet') }}" class="new">
+				<p><input type="submit" name='button' value="aanmaken-richting">
+				{% from "_macros.html" import render_field %}
+				<dl>
+					{{ render_field(form.naam) }}
+					{{ render_field(form.description) }}
+				</dl>
+			</form>
 			<ul class="study cfx">
-				<h4>Nieuw:</h4>
-				<form method="post" action="{{ url_for('intranet') }}" class="new">
-					<p><input type="submit" name='button' value="Aanmaken">
-					{% from "_macros.html" import render_field %}
-					<dl>
-						{{ render_field(form.naam) }}
-						{{ render_field(form.description) }}
-					</dl>
-				</form>
-
 				{% for richting in aanbodArray %}
 					<li>
 						<div>
 							<form method="post" action="{{ url_for('intranet') }}" class="delete">
-								<p><input type="submit" name='button' value="Delete" class="deletebtn"></p>
+								<p><input type="submit" name='button' value="delete-richting" class="deletebtn"></p>
 								<input name="delete-id" value="{% for info in richting %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
 								<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
 							</form>
@@ -44,8 +43,22 @@
 			</ul>
 
 			{% elif option == 'Klassen'%}
+			<h4>Nieuw:</h4>
+			<form method="post" action="{{ url_for('intranet') }}" class="new">
+				<p><input type="submit" name='button' value="aanmaken-klas">
+				{% from "_macros.html" import render_field %}
+				<dl>
+					{{ render_field(form.jaar) }}
+					{{ render_field(form.richting) }}
+				</dl>
+			</form>
 			<ul class="klassen">
 				{% for klas in klasArray %}
+				<form method="post" action="{{ url_for('intranet') }}" class="delete">
+					<p><input type="submit" name='button' value="delete-klas" class="deletebtn"></p>
+					<input name="delete-id" value="{% for info in klas %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %}" type="hidden">
+					<!-- https://stackoverflow.com/questions/32022568/get-value-of-a-form-id-python-flask -->
+				</form>
 				<li><p>{% for info in klas %}{% if loop.index == 1 %}{{ info }}{% endif %}{% endfor %} {% for info in klas %}{% if loop.index == 2 %}{{ info }}{% endif %}{% endfor %}</p></li>
 				{% endfor %}
 			</ul>

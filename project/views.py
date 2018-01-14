@@ -66,36 +66,57 @@ def intranet(option='Richtingen'):
 	aanbodArray = get_aanbod()
 	klasArray = get_klassen()
 
+	form = MyForm(request.form)
+	if option == "Klassen":
+		richtingArray = get_richting_id()
+		form.richting.choices = richtingArray
+
 	try:
-		form = MyForm(request.form)
 		if request.method == 'POST':
 			whichForm = request.form.get('button')
-
 			to_do = ""
 			note = ""
 			form.value = []
+			url = ""
 
-			if whichForm == 'Aanmaken':
+			if whichForm == 'aanmaken-richting':
 				#if form.validate():
 				form.value =	[request.form.get('naam'), 
 								request.form.get('description')]
 				to_do = "INSERT INTO richtingen (name,description) VALUES (?, ?)"
 				note = "Richting aangemaakt!"
+				url = "/Richtingen"
 
-			if whichForm == 'Delete':
+			elif whichForm == 'delete-richting':
 				form.value = [request.form.get('delete-id')]
 				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
 				note = "Richting gedelete!"
+				url = "/Richtingen"
 
-			if whichForm == 'Update':
-				print "update"
+			elif whichForm == 'update-richting':
+				
+				url = "/Richtingen"
 				return
+
+			elif whichForm == 'aanmaken-klas':
+				#if form.validate():
+				form.value =	[request.form.get('jaar'), 
+								request.form.get('richting')]
+				to_do = "INSERT INTO klassen (jaar,richting_id) VALUES (?, ?)"
+				note = "Klas aangemaakt!"
+				url = "/Klassen"
+
+			elif whichForm == 'delete-klas':
+				form.value = [request.form.get('delete-id')]
+				to_do = "DELETE FROM richtingen WHERE richting_id = ?"
+				note = "Richting gedelete!"
+				url = "/Klassen"
 
 			db = get_db()
 			db.execute(to_do, (form.value));
 			db.commit()
 			flash(note)
-			return redirect(url_for('intranet'))
+			return redirect(url_for('intranet') + url)
 	except KeyError:
 		return 'error'
 
@@ -196,6 +217,14 @@ def get_klassen():
 		klasArray.append( row )
 	return klasArray
 
+def get_richting_id():
+	db = get_db()
+	aanbod = db.execute('SELECT richting_id, name FROM richtingen')
+	db.commit()
+	aanbodArray = []
+	for row in aanbod:
+		aanbodArray.append( row )
+	return aanbodArray
 
 
 
