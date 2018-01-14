@@ -40,12 +40,12 @@ def contact():
 	try:
 		contactForm = ContactForm(request.form)
 		if request.method == 'POST' and contactForm.validate():
-			contactForm.value = [request.contactForm.get('naam'), 
-								request.contactForm.get('straat'), 
-								request.contactForm.get('stad'), 
-								request.contactForm.get('postcode'), 
-								request.contactForm.get('phone'), 
-								request.contactForm.get('msg')]
+			contactForm.value = [request.form.get('naam'), 
+								request.form.get('straat'), 
+								request.form.get('stad'), 
+								request.form.get('postcode'), 
+								request.form.get('phone'), 
+								request.form.get('msg')]
 			add_post = "INSERT INTO contact (naam,straat,stad,zip,phone,msg) VALUES (?, ?, ?, ?, ?, ? )"
 
 			db = get_db()
@@ -74,6 +74,7 @@ def intranet(option='richtingen'):
 
 	elif option == "klassen":
 		klasArray = get_klassen()
+
 		richtingArray = get_richting_id()
 		klasForm.richting.choices = richtingArray
 
